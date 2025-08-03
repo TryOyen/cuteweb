@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>cutiegirl</title>
+    <style>
+      body {
+        background-image: url(https://images.unsplash.com/photo-1517867065801-e20f409696b0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8aGVhcnRzJTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D);
+      }
+
+      .btn-no {
+        transition: all 0.3s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 50px;
+        max-width: 120px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+  </head>
+
+  <body class="justify-center flex">
+    <main
+      class="bg-white rounded mt-24 p-8 shadow-lg shadow-red-200 animate__animated animate__backInDown"
+    >
+      <img
+        class="cat-img"
+        src="https://media.tenor.com/76BaX0eo304AAAAm/kitty-kitty-heart.webp"
+        alt="Picture of a cat"
+        width="200"
+      />
+      <div class="border-b mt-2 border-2"></div>
+      <div class="lh-1 text-center mt-4">
+        
+        <h2 id="greeting-title" class="title text-red-400 text-2xl font-semibold">
+          Haloo Deniaaa,
+        </h2>
+        
+        <p class="title question fs-1 text-2xl font-bold text-gray-700">Jangan Pencet No Yaa?</p>
+      </div>
+      <div class="buttons mt-5 flex justify-around">
+        <button
+          type="button"
+          class="btn-yes bg-green-500 rounded text-white text-3xl px-2 pt-1 pb-2 animate__pulse animate__animated animate__infinite"
+        >
+          yes
+        </button>
+        <button
+          type="button"
+          class="btn-no bg-red-500 rounded text-white text-3xl px-2 pt-1 pb-2 animate__pulse animate__animated animate__infinite"
+        >
+          no
+        </button>
+      </div>
+      <div class="numbers hidden mt-5 flex justify-center">
+        <a
+          href="https://wa.me/62895322145734"
+          type="button"
+          class="bg-green-500 text-white py-1 px-2 rounded btn-yes w-100 text-xl font-bold"
+        >
+          Chat disini yaaa</a
+        >
+      </div>
+    </main>
+
+    <script>
+      const titleElement = document.querySelector(".title");
+      const buttonsContainer = document.querySelector(".buttons");
+      const numberContainer = document.querySelector(".numbers");
+      const yesButton = document.querySelector(".btn-yes");
+      const noButton = document.querySelector(".btn-no");
+      const catImg = document.querySelector(".cat-img");
+      const title = document.querySelector(".title");
+      const question = document.querySelector(".question");
+      const greetingTitle = document.getElementById("greeting-title");
+
+      const MAX_IMAGES = 5;
+
+      let play = true;
+      let count = 0;
+
+      let listGambar = [
+        "https://media1.tenor.com/m/BbSkyx3DaEgAAAAd/goma-sad.gif",
+        "https://media.tenor.com/V9irLqnUcLsAAAAM/shock-shocked.gif",
+        "https://media.tenor.com/lI1b3RZqGe8AAAAm/crying.webp",
+        "https://media.tenor.com/X9pghVUlMvEAAAAM/sad-cat.gif",
+        "https://media1.tenor.com/m/M_5Qg9ok3HQAAAAC/cat-pout.gif",
+        "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNW9temgzcjlieHJtOXM2YXhoeW94N2k2c3ljcmtpYTZ4NnBicm0ybyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/f9EmXxglhdhAj1bo28/giphy.webp",
+      ];
+
+      let listPertanyaan = [
+        "Yakin No?",
+        "Kamu Bercanda kan?",
+        "Kenapa Pencet No?",
+        "Salah Pencet Kan?",
+        "Serius Nihh?",
+        "Pleaseee Deniaa",
+      ];
+
+      yesButton.addEventListener("click", function () {
+        //pergi ke halaman terakhir (nomor wa)
+        buttonsContainer.classList.add("hidden");
+        title.classList.add("hidden");
+        question.classList.add("hidden");
+        numberContainer.classList.remove("hidden");
+        changeImage(6);
+        question.innerHTML = listPertanyaan[5];
+        greetingTitle.style.display = "none"; // sembunyikan judul (haloo)
+      });
+
+      noButton.addEventListener("click", function () {
+        if (play) {
+          count++;
+          const imageIndex = Math.min(count, MAX_IMAGES);
+          changeImage(imageIndex);
+          updateNoButtonText();
+          updateQuestion(count);
+
+          // sembunyikan judul (haloo) setelah klik NO pertama kali
+          if (count === 1) {
+            greetingTitle.style.display = "none";
+          }
+
+          // ubah ukuran tombol NO dan font sesuai count atau hitungan
+          if (count === 1) {
+            noButton.style.width = "90px";
+            noButton.style.fontSize = "1.5rem";
+          } else if (count === 2) {
+            noButton.style.width = "70px";
+            noButton.style.fontSize = "1.2rem";
+          } else if (count === 3) {
+            noButton.style.width = "55px";
+            noButton.style.fontSize = "1rem";
+          } else if (count === 4) {
+            noButton.style.width = "40px";
+            noButton.style.fontSize = "0.9rem";
+          }
+
+          // Sembunyikan tombol NO setelah terakhir
+          if (count === MAX_IMAGES) {
+            play = false;
+            setTimeout(() => {
+              noButton.style.display = "none";
+            }, 400);
+          }
+        }
+      });
+
+      function generateMessage(count) {
+        const messages = ["no", "no", "no", "no", "no"];
+        const messageIndex = Math.min(count, messages.length - 1);
+        return messages[messageIndex];
+      }
+
+      function changeImage(imageIndex) {
+        catImg.src = `${listGambar[imageIndex - 1]}`;
+      }
+
+      function updateNoButtonText() {
+        noButton.innerHTML = generateMessage(count);
+      }
+
+      function updateQuestion(count) {
+        question.innerHTML = listPertanyaan[Math.min(count, listPertanyaan.length - 1)];
+      }
+    </script>
+  </body>
+</html>
